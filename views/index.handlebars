@@ -1,15 +1,4 @@
-<!DOCTYPE html>
-<html>
 
-<head>
-  <meta charset="utf-8">
-  <title></title>
-  <link rel="stylesheet" href="css/skeleton.css">
-  <link rel="stylesheet" href="css/style.css">
-</head>
-
-<body>
-  <div class="container">
     <div class="row">
 
       <div class="twelve columns box">
@@ -49,7 +38,7 @@
             <table>
               <tr>
                 <td>
-                  <a href="/actions/calls">Call total</a>
+                  <a href="/actions/call">Call total</a>
                 </td>
                 <td>R<span class="callTotalSettings">{{totals.callTotal}}</span> </td>
               </tr>
@@ -63,7 +52,7 @@
                 <td>
                   <a href="/actions">Total</a>
                 </td>
-                <td> R<span class="totalSettings">{{totals.grandTotal}}</span> </td>
+                <td> R<span class="{{setClassNames}}">{{totals.grandTotal}}</span> </td>
               </tr>
             </table>
 
@@ -90,10 +79,4 @@
         </div>
       </div>
     </div>
-  </div>
-
-
-
-</body>
-
-</html>
+ 

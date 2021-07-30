@@ -5,6 +5,12 @@ const SettingsBill = require('../settings-bill');
 describe('settings-bill', function(){
 
     const settingsBill = SettingsBill();
+    settingsBill.setSettings({
+        smsCost: 2.35,
+        callCost: 3.35,
+        warningLevel: 30,
+        criticalLevel: 40
+    });
 
     it('should be able to record calls', function(){
         settingsBill.recordAction('call');

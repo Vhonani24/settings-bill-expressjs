@@ -1,27 +1,45 @@
 const express = require('express');
 const app = express();
 const exphbs = require('express-handlebars');
-const bodyParser = require('body-parser');
+
+
 const SettingsBill = require('./settings-bill');
 
 
 const settingsBill = SettingsBill();
+app.engine('handlebars', exphbs({ layoutsDir: 'views/layouts/' }));
+app.set('view engine', 'handlebars');
 
 app.use(express.static('public'));
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json())
 
 app.get('/', function (req, res) {
+    let setClassName = '';
+    
+    if(settingsBill.hasReachedWarningLevel()){
+        setClassName = 'warning'
+    }
+    if(settingsBill.hasReachedCriticalLevel()){
+        setClassName = 'danger'
+        
+    }
     res.render('index', {
         settings: settingsBill.getSettings(),
-        totals: settingsBill.totals()
+        totals: settingsBill.totals(),
+        setClassNames: setClassName
+        
+       
+
+
     });
 });
 app.get('/actions', function (req, res) {
-    res.render('actions', {settings: settingsBill.actions()});
+    res.render('actions', {actions: settingsBill.actions()});
 });
-app.get('/actions/:type', function (req, res) {
-   res.send('Settings Bill App')
+app.get('/actions/:actionType', function (req, res) {
+    const actionType = req.params.actionType;
+    res.render('actions', {actions: settingsBill.actionsFor(actionType)});
 });
 app.post('/settings', function (req, res) {
 
@@ -46,8 +64,4 @@ const PORT = process.env.PORT || 3011;
 app.listen(PORT, function () {
     console.log('App started at port:', PORT);
 });
-app.locals.layout = false;
-app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
-app.set('view engine', 'handlebars');
-
 
