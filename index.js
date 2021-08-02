@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const exphbs = require('express-handlebars');
+const moment = require('moment'); 
 
 
 const SettingsBill = require('./settings-bill');
@@ -40,7 +41,13 @@ app.get('/actions', function (req, res) {
 app.get('/actions/:actionType', function (req, res) {
     const actionType = req.params.actionType;
     res.render('actions', {actions: settingsBill.actionsFor(actionType)});
+
+    let actions = settingsBill.actions()
+    actions.forEach(item => {
+        item.timestamps = moment(item.timestamp).fromNow();
+    })
 });
+
 app.post('/settings', function (req, res) {
 
     settingsBill.setSettings({
