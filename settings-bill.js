@@ -28,20 +28,24 @@ module.exports = function SettingsBill() {
     function recordAction(action) {
         var canAdd = action=='sms'? smsCost+ grandTotal(): callCost+ grandTotal()
 
-        if(canAdd<= criticalLevel){
+        if(canAdd<= criticalLevel ){
             let cost = 0;
-            if (action === 'sms'){
+            if (action === 'sms' ){
                 cost = smsCost;
             }
             else if (action === 'call'){
                 cost = callCost;
             }
-    
-            actionList.push({
-                type: action,
-                cost,
-                timestamp: new Date()
-            });
+            if(action === 'sms' || action === 'call' && action !== ''){
+                actionList.push({
+                    type: action,
+                    cost,
+                    timestamp: new Date()
+                });
+
+            }
+        
+            
         }
     }
 
